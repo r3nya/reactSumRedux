@@ -43,7 +43,6 @@ Numbox2.contextTypes = {
 };
 
 const Output = props => ( <p> {props.result} </p>);
-
 /*
 let Adder = React.createClass ({
     render: function () {
@@ -63,7 +62,7 @@ let Adder = React.createClass ({
 });
 */
 
-let Adder = (props, context) => {
+const Adder = (props, context) => {
         const { getState } = context.store;
         const s = getState();
         return (<div>
@@ -80,9 +79,8 @@ Adder.contextTypes = {
 // Connect the adder to the store
 ReactRedux.connect(s => s)(Adder);
 
-ReactDom.render(
-    <ReactRedux.Provider store={Redux.createStore(adder)}>
-    <Adder/>
-    </ReactRedux.Provider>,
+ReactDom.render(<ReactRedux.Provider store={Redux.createStore(adder)}>
+                <Adder/>
+                </ReactRedux.Provider>,
     document.getElementById('app'));
 
