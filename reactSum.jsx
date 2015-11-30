@@ -26,33 +26,29 @@ const adder = (state = Immutable.Map({ x: 0, y: 0, z: 0}), action) => {
 
 // COMPONENTS
 const Numbox1 = React.createClass ({
-    render: function() {
-        return ( <input type="number"
-                value={this.props.value}
-                onChange={e => dispatch(sumX(e.target.value))}/>
-               );
-    }
+    render: () => ( <input type="number"
+                   value={this.props.value}
+                   onChange={e => dispatch(sumX(e.target.value))}/>
+                  )
 });
 
 const Numbox2 = React.createClass ({
-    render: function() {
-        return (<input type="number"
-                value={this.props.value}
-                onChange={e => dispatch(sumY(e.target.value))}/>
-               );
-    }
+    render: () => (<input type="number"
+                   value={this.props.value}
+                   onChange={e => dispatch(sumY(e.target.value))}/>
+                  )
 });
 
 const Output = React.createClass ({
-    render: function () {
-        return <p> {this.props.result} </p>;
-    }
+    render: () => (<p> {this.props.result} </p>)
 });
 
-const Adder = React.createClass ({
+let Adder = React.createClass ({
     render: function () {
-        console.log("CONTEXT");
-        console.log(this.context.keys);
+        console.log(this);
+        console.log("==CONTEXT==");
+        console.log(this.context);
+        console.log("==PROPS==");
         console.log(this.props);
         const { dispatch, s } = this.props;
         return (<div>
