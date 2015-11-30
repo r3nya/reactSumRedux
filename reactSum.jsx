@@ -25,18 +25,19 @@ const adder = (state = Immutable.Map({ x: 0, y: 0, z: 0}), action) => {
 };
 
 // COMPONENTS
-const Numbox1 = props => ( <input type="number"
-                          value={this.props.value}
-                          onChange={e => dispatch(sumX(e.target.value))}/>
-                         );
+const Numbox1 = ({value}) => ( <input type="number"
+                              value={value}
+                              onChange={e => dispatch(sumX(e.target.value))}/>
+                             );
 
-const Numbox2 = props => ( <input type="number"
-                          value={this.props.value}
+const Numbox2 = ({value})  => ( <input type="number"
+                          value={value}
                           onChange={e => dispatch(sumY(e.target.value))}/>
                          );
 
-const Output = props => ( <p> {this.props.result} </p>);
+const Output = ({result}) => ( <p> result </p>);
 
+/*
 let Adder = React.createClass ({
     render: function () {
         console.log(this);
@@ -52,13 +53,25 @@ let Adder = React.createClass ({
                 </div>);
     }
 });
+*/
+const Adder = (props,context) => {
+    console.log("==CONTEXT==");
+    console.log(context);
+    console.log("==PROPS==");
+    console.log(props);
+    const { dispatch, s } = props;
+    return (<div>
+            <Numbox1 value={s.x}/>
+            <Numbox2 value={s.y}/>
+            <Output result={s.z}/>
+            </div>);
+};
 
 // Connect the adder to the store
 ReactRedux.connect(s => s)(Adder);
 
-ReactDom.render(
-    <ReactRedux.Provider store={Redux.createStore(adder)}>
-    <Adder/>
-    </ReactRedux.Provider>,
+ReactDom.render(<ReactRedux.Provider store={Redux.createStore(adder)}>
+                <Adder/>
+                </ReactRedux.Provider>,
     document.getElementById('app'));
 
