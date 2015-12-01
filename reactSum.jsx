@@ -8,9 +8,9 @@ const Immutable = require('immutable');
 const ReactRedux =  require('react-redux');
 
 // ACTIONS
-const sumX = n => ({ type: 'x', value: parseInt(n)});
+const change_x = n => ({ type: 'x', value: parseInt(n)});
 
-const sumY = n => ({ type: 'y', value: parseInt(n)});
+const change_y = n => ({ type: 'y', value: parseInt(n)});
 
 // REDUCER
 const adder = (state = Immutable.Map({ x: 0, y: 0, z: 0}), {value, type}) => {
@@ -25,15 +25,12 @@ const adder = (state = Immutable.Map({ x: 0, y: 0, z: 0}), {value, type}) => {
 
 // COMPONENTS
 const Numbox1 = ({value}, {store}) => {
-    console.log("value is:");
-    console.log(props);
-
     return ( <input type="number"
             value={value}
             onChange={e => {
                 console.log("event value is:");
                 console.log(e.target.value);
-                return store.dispatch(sumX(e.target.value));}}/>
+                return store.dispatch(change_x(e.target.value));}}/>
            );
 };
 
@@ -44,7 +41,7 @@ Numbox1.contextTypes = {
 const Numbox2 = ({value}, {store}) => (
     <input type="number"
            value={value}
-           onChange={e => store.dispatch(sumY(e.target.value))}/>
+           onChange={e => store.dispatch(change_y(e.target.value))}/>
 );
 
 Numbox2.contextTypes = {
@@ -71,25 +68,26 @@ let Adder = React.createClass ({
 });
 */
 
-const Adder = (props, {store}) => {
-        const state = store.getState();
+const Adder = ({state}) => {
         return (<div>
-                  <Numbox1 value={state.x}/>
-                  <Numbox2 value={state.y}/>
-                  <Output result={state.z}/>
+                  <Numbox1 value={state.get('x')}/>
+                  <Numbox2 value={state.get('y')}/>
+                  <Output result={state.get('z')}/>
                 </div>);
 };
 
+/*
 Adder.contextTypes = {
     store: React.PropTypes.object
 };
+*/
 
 // Connect the adder to the store
-ReactRedux.connect(s => s)(Adder);
+const ConnectedAdder = ReactRedux.connect(state => ({state: state}))(Adder);
 
 ReactDom.render(
     <ReactRedux.Provider store={Redux.createStore(adder)}>
-        <Adder/>
+        <ConnectedAdder/>
     </ReactRedux.Provider>,
     document.getElementById('app'));
 
