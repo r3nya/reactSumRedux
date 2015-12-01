@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/browserify reactSum.jsx -o reactSum.js -t [ babelify --presets [  react es2015 ] ]",
-    "watch": "./node_modules/.bin/watchify reactSum.jsx -o reactSum.js -t [ babelify --presets [  react es2015 ] ]",
+    "watch": "./node_modules/.bin/watchify  reactSum.jsx -v -o reactSum.js -t [ babelify --presets [  react es2015 ] ]",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "ISC"
