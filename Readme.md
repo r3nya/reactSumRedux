@@ -4,4 +4,4 @@ You should have browserify installed, then:
 
 And:
 
-    browserify reactSum.jsx -o reactSum.js -t [ babelify --presets [  react es2015 ] ]
+    npm run build
