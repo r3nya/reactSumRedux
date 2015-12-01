@@ -24,63 +24,25 @@ const adder = (state = Immutable.Map({ x: 0, y: 0, z: 0}), {value, type}) => {
 };
 
 // COMPONENTS
-const Numbox1 = ({value}, {store}) => {
+const Numbox = ({value, action}) => {
     return ( <input type="number"
             value={value}
-            onChange={e => {
-                console.log("event value is:");
-                console.log(e.target.value);
-                return store.dispatch(change_x(e.target.value));}}/>
+            onChange={action}/>
            );
 };
 
-Numbox1.contextTypes = {
-    store: React.PropTypes.object
-};
-
-const Numbox2 = ({value}, {store}) => (
-    <input type="number"
-           value={value}
-           onChange={e => store.dispatch(change_y(e.target.value))}/>
-);
-
-Numbox2.contextTypes = {
-    store: React.PropTypes.object
-};
-
 const Output = ({result}) => (<p> {result} </p>);
-/*
-let Adder = React.createClass ({
-    render: function () {
-        console.log(this);
-        console.log("==CONTEXT==");
-        console.log(this.context);
-        console.log("==PROPS==");
-        console.log(this.props);
-        const { dispatch, getState } = this.props.store;
-        const s = getState();
-        return (<div>
-                  <Numbox1 value={s.x}/>
-                  <Numbox2 value={s.y}/>
-                  <Output result={s.z}/>
-                </div>);
-    }
-});
-*/
 
-const Adder = ({state}) => {
+const Adder = ({state,dispatch}) => {
         return (<div>
-                  <Numbox1 value={state.get('x')}/>
-                  <Numbox2 value={state.get('y')}/>
+                  <Numbox value={state.get('x')}
+                          action={e => dispatch(change_x(e.target.value))}/>
+                  <Numbox value={state.get('y')}
+                          action={e => dispatch(change_y(e.target.value))}/>
                   <Output result={state.get('z')}/>
                 </div>);
 };
 
-/*
-Adder.contextTypes = {
-    store: React.PropTypes.object
-};
-*/
 
 // Connect the adder to the store
 const ConnectedAdder = ReactRedux.connect(state => ({state: state}))(Adder);
